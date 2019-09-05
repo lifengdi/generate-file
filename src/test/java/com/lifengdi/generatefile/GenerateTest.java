@@ -1,7 +1,5 @@
 package com.lifengdi.generatefile;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.lifengdi.GenerateFileApplication;
 import com.lifengdi.commons.utils.Either;
 import com.lifengdi.exception.ApiException;

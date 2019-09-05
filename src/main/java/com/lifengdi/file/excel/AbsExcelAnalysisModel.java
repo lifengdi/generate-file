@@ -11,7 +11,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 
 /**
- * 抽象类
+ * Excel解析抽象类
  * @author 李锋镝
  * @date Create at 10:42 2019/4/9
  */
@@ -99,7 +99,7 @@ public abstract class AbsExcelAnalysisModel implements IExcelAnalysisModel {
 
     /**
      * 检查文件格式
-     * @param fileName
+     * @param fileName 文件名
      */
     protected void checkFileFormat(String fileName) {
         if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {

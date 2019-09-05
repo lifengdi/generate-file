@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 接口类
+ * Excel解析接口类
  * @author 李锋镝
  * @date Create at 10:42 2019/4/9
  */

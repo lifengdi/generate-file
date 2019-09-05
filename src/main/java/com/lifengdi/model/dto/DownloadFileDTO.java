@@ -1,4 +1,4 @@
-package com.lifengdi.model;
+package com.lifengdi.model.dto;
 
 import lombok.Data;
 

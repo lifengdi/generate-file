@@ -5,11 +5,25 @@ server:
 spring:
   application:
     name: generate-file
+  datasource:
+    url: jdbc:mysql://localhost:3306/job_center?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true&
+    username: root
+    password: root
+#    url: jdbc:mysql://10.4.8.2:20059/job_center?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true&
+#    username: admin
+#    password: Yixin@kkc123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+      database: 2
+      host: 127.0.0.1
+      port: 6379
   jackson:
       date-format: yyyy-MM-dd HH:mm:ss
       time-zone: GMT+8
       joda-date-time-format: yyyy-MM-dd HH:mm:ss
       default-property-inclusion: non_null
+  freemarker:
+    check-template-location: false
 
 logging:
   file: application.log
@@ -64,3 +78,20 @@ pdf:
           yInterval: 120
           page:
           overContent: true
+
+success:
+  successCode:
+    200: 200
+    2000: 2000
+
+#pagehelper分页插件配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: false
+  supportMethodsArguments: true
+  params: pageNum=page;pageSize=size;count=countSql;
+
+mybatis:
+  typeAliasesPackage: com.lifengdi.job.entity
+  # mapper 的xml文件扫描路径
+  mapper-locations: classpath:mapper/**/*.xml

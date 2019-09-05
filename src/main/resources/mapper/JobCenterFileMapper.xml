@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lifengdi.job.mapper.JobCenterFileMapper">
+  <resultMap id="BaseResultMap" type="com.lifengdi.job.entity.JobCenterFile">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="obj_id" jdbcType="VARCHAR" property="objId" />
+    <result column="obj_type" jdbcType="INTEGER" property="objType" />
+    <result column="file_cdn" jdbcType="VARCHAR" property="fileCdn" />
+    <result column="file_url" jdbcType="VARCHAR" property="fileUrl" />
+    <result column="file_type" jdbcType="VARCHAR" property="fileType" />
+    <result column="file_analysis_model" jdbcType="VARCHAR" property="fileAnalysisModel" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, obj_id, obj_type, file_cdn, file_url, file_type, file_analysis_model, status, 
+    deleted, created_time
+  </sql>
+  <select id="selectByExample" parameterType="com.lifengdi.job.example.JobCenterFileCondition" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_file
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_file
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lifengdi.job.entity.JobCenterFile">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_file (obj_id, obj_type, file_cdn, 
+      file_url, file_type, file_analysis_model, 
+      status, deleted, created_time
+      )
+    values (#{objId,jdbcType=VARCHAR}, #{objType,jdbcType=INTEGER}, #{fileCdn,jdbcType=VARCHAR}, 
+      #{fileUrl,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, #{fileAnalysisModel,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{deleted,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lifengdi.job.entity.JobCenterFile">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_file
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="objId != null">
+        obj_id,
+      </if>
+      <if test="objType != null">
+        obj_type,
+      </if>
+      <if test="fileCdn != null">
+        file_cdn,
+      </if>
+      <if test="fileUrl != null">
+        file_url,
+      </if>
+      <if test="fileType != null">
+        file_type,
+      </if>
+      <if test="fileAnalysisModel != null">
+        file_analysis_model,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="objId != null">
+        #{objId,jdbcType=VARCHAR},
+      </if>
+      <if test="objType != null">
+        #{objType,jdbcType=INTEGER},
+      </if>
+      <if test="fileCdn != null">
+        #{fileCdn,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null">
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileAnalysisModel != null">
+        #{fileAnalysisModel,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lifengdi.job.example.JobCenterFileCondition" resultType="java.lang.Long">
+    select count(*) from t_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_file
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.objId != null">
+        obj_id = #{record.objId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objType != null">
+        obj_type = #{record.objType,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileCdn != null">
+        file_cdn = #{record.fileCdn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileUrl != null">
+        file_url = #{record.fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileType != null">
+        file_type = #{record.fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileAnalysisModel != null">
+        file_analysis_model = #{record.fileAnalysisModel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdTime != null">
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_file
+    set id = #{record.id,jdbcType=BIGINT},
+      obj_id = #{record.objId,jdbcType=VARCHAR},
+      obj_type = #{record.objType,jdbcType=INTEGER},
+      file_cdn = #{record.fileCdn,jdbcType=VARCHAR},
+      file_url = #{record.fileUrl,jdbcType=VARCHAR},
+      file_type = #{record.fileType,jdbcType=VARCHAR},
+      file_analysis_model = #{record.fileAnalysisModel,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      deleted = #{record.deleted,jdbcType=INTEGER},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lifengdi.job.entity.JobCenterFile">
+    update t_file
+    <set>
+      <if test="objId != null">
+        obj_id = #{objId,jdbcType=VARCHAR},
+      </if>
+      <if test="objType != null">
+        obj_type = #{objType,jdbcType=INTEGER},
+      </if>
+      <if test="fileCdn != null">
+        file_cdn = #{fileCdn,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null">
+        file_url = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        file_type = #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileAnalysisModel != null">
+        file_analysis_model = #{fileAnalysisModel,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lifengdi.job.entity.JobCenterFile">
+    update t_file
+    set obj_id = #{objId,jdbcType=VARCHAR},
+      obj_type = #{objType,jdbcType=INTEGER},
+      file_cdn = #{fileCdn,jdbcType=VARCHAR},
+      file_url = #{fileUrl,jdbcType=VARCHAR},
+      file_type = #{fileType,jdbcType=VARCHAR},
+      file_analysis_model = #{fileAnalysisModel,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=INTEGER},
+      created_time = #{createdTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

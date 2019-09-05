@@ -5,7 +5,7 @@ import com.lifengdi.config.QCloudCOSConfiguration;
 import com.lifengdi.config.SystemConfig;
 import com.lifengdi.exception.ApiException;
 import com.lifengdi.exception.BaseException;
-import com.lifengdi.model.DownloadFileDTO;
+import com.lifengdi.model.dto.DownloadFileDTO;
 import com.lifengdi.http.HttpUtil;
 import com.lifengdi.util.GeneratedKey;
 import lombok.extern.slf4j.Slf4j;

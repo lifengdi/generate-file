@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lifengdi.job.mapper.IJobMapper">
+  <resultMap id="BaseResultMap" type="com.lifengdi.job.entity.Job">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="job_id" jdbcType="VARCHAR" property="jobId" />
+    <result column="job_type_id" jdbcType="VARCHAR" property="jobTypeId" />
+    <result column="job_title" jdbcType="VARCHAR" property="jobTitle" />
+    <result column="job_type_desc" jdbcType="VARCHAR" property="jobTypeDesc" />
+    <result column="send_notification" jdbcType="INTEGER" property="sendNotification" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="created_user_id" jdbcType="VARCHAR" property="createdUserId" />
+    <result column="created_user_name" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="created_user_phone" jdbcType="VARCHAR" property="createdUserPhone" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="updated_user_id" jdbcType="VARCHAR" property="updatedUserId" />
+    <result column="updated_user_name" jdbcType="VARCHAR" property="updatedUserName" />
+    <result column="updated_user_phone" jdbcType="VARCHAR" property="updatedUserPhone" />
+    <result column="execute_status" jdbcType="VARCHAR" property="executeStatus" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, job_id, job_type_id, job_title, job_type_desc, send_notification, created_time, 
+    created_user_id, created_user_name, created_user_phone, updated_time, updated_user_id, 
+    updated_user_name, updated_user_phone, execute_status, status, deleted
+  </sql>
+  <select id="selectByJobId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_job
+    where  job_id = #{record.jobId,jdbcType=VARCHAR}
+  </select>
+</mapper>

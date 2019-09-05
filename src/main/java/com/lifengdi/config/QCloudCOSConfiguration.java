@@ -166,4 +166,24 @@ public class QCloudCOSConfiguration {
         return key;
     }
 
+    /**
+     * 根据图片CDN路径 获取临时访问地址
+     * @param fileCdnUrl fileCdnUrl
+     * @return 临时访问地址
+     */
+    public String fileCacheUrl(String fileCdnUrl) {
+        return fileCacheUrl(fileCdnUrl, null);
+    }
+
+    /**
+     * 根据图片CDN路径 获取临时访问地址
+     * @param fileCdnUrl fileCdnUrl
+     * @param bizCode bizCode
+     * @return 临时访问地址
+     */
+    public String fileCacheUrl(String fileCdnUrl, String bizCode) {
+
+        return null;
+    }
+
 }

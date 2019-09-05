@@ -2,7 +2,7 @@ package com.lifengdi.file.builder;
 
 import com.lifengdi.commons.utils.Either;
 import com.lifengdi.exception.ApiException;
-import com.lifengdi.model.DownloadFileDTO;
+import com.lifengdi.model.dto.DownloadFileDTO;
 
 import java.util.Map;
 

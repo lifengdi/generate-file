@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lifengdi.job.mapper.IJobTypeMapper">
+  <resultMap id="BaseResultMap" type="com.lifengdi.job.entity.JobType">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="job_type_id" jdbcType="VARCHAR" property="jobTypeId" />
+    <result column="job_type_desc" jdbcType="VARCHAR" property="jobTypeDesc" />
+    <result column="generate_file" jdbcType="INTEGER" property="generateFile" />
+    <result column="upload_file" jdbcType="INTEGER" property="uploadFile" />
+    <result column="send_notification" jdbcType="INTEGER" property="sendNotification" />
+    <result column="notification_type" jdbcType="BIGINT" property="notificationType" />
+    <result column="request_url" jdbcType="VARCHAR" property="requestUrl" />
+    <result column="request_method" jdbcType="VARCHAR" property="requestMethod" />
+    <result column="enable_access" jdbcType="INTEGER" property="enableAccess" />
+    <result column="response_data_entity" jdbcType="VARCHAR" property="responseDataEntity" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="created_user_id" jdbcType="VARCHAR" property="createdUserId" />
+    <result column="created_user_name" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="created_user_phone" jdbcType="VARCHAR" property="createdUserPhone" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="updated_user_id" jdbcType="VARCHAR" property="updatedUserId" />
+    <result column="updated_user_name" jdbcType="VARCHAR" property="updatedUserName" />
+    <result column="updated_user_phone" jdbcType="VARCHAR" property="updatedUserPhone" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, job_type_id, job_type_desc, generate_file, upload_file, send_notification, notification_type,
+    request_url, request_method, enable_access, response_data_entity, created_time, created_user_id,
+    created_user_name, created_user_phone, updated_time, updated_user_id, updated_user_name,
+    updated_user_phone, status, deleted
+  </sql>
+  <update id="updateByJobTypeIdSelective" parameterType="com.lifengdi.job.entity.JobType">
+    update t_job_type
+    <set>
+      <if test="jobTypeDesc != null">
+        job_type_desc = #{jobTypeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="generateFile != null">
+        generate_file = #{generateFile,jdbcType=INTEGER},
+      </if>
+      <if test="uploadFile != null">
+        upload_file = #{uploadFile,jdbcType=INTEGER},
+      </if>
+      <if test="sendNotification != null">
+        send_notification = #{sendNotification,jdbcType=INTEGER},
+      </if>
+      <if test="notificationType != null">
+        notification_type = #{notificationType,jdbcType=BIGINT},
+      </if>
+      <if test="requestUrl != null">
+        request_url = #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null">
+        request_method = #{requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="enableAccess != null">
+        enable_access = #{enableAccess,jdbcType=INTEGER},
+      </if>
+      <if test="responseDataEntity != null">
+        response_data_entity = #{responseDataEntity,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedUserId != null">
+        updated_user_id = #{updatedUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedUserName != null">
+        updated_user_name = #{updatedUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedUserPhone != null">
+        updated_user_phone = #{updatedUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where job_type_id = #{jobTypeId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByJobTypeId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_job_type
+    where job_type_id = #{jobTypeId,jdbcType=VARCHAR}
+  </select>
+</mapper>

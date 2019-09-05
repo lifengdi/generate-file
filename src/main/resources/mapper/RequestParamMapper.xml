@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lifengdi.job.mapper.RequestParamMapper">
+  <resultMap id="BaseResultMap" type="com.lifengdi.job.entity.RequestParam">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="obj_id" jdbcType="VARCHAR" property="objId" />
+    <result column="obj_type" jdbcType="INTEGER" property="objType" />
+    <result column="param_name" jdbcType="VARCHAR" property="paramName" />
+    <result column="param_title" jdbcType="VARCHAR" property="paramTitle" />
+    <result column="param_type" jdbcType="VARCHAR" property="paramType" />
+    <result column="param_value" jdbcType="VARCHAR" property="paramValue" />
+    <result column="param_format" jdbcType="VARCHAR" property="paramFormat" />
+    <result column="required" jdbcType="INTEGER" property="required" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="created_user_id" jdbcType="VARCHAR" property="createdUserId" />
+    <result column="created_user_name" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="created_user_phone" jdbcType="VARCHAR" property="createdUserPhone" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="updated_user_id" jdbcType="VARCHAR" property="updatedUserId" />
+    <result column="updated_user_name" jdbcType="VARCHAR" property="updatedUserName" />
+    <result column="updated_user_phone" jdbcType="VARCHAR" property="updatedUserPhone" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, obj_id, obj_type, param_name, param_title, param_type, param_value, param_format, 
+    required, created_time, created_user_id, created_user_name, created_user_phone, updated_time, 
+    updated_user_id, updated_user_name, updated_user_phone, status, deleted
+  </sql>
+  <select id="selectByExample" parameterType="com.lifengdi.job.example.RequestParamCondition" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_request_param
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_request_param
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_request_param
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lifengdi.job.entity.RequestParam">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_request_param (obj_id, obj_type, param_name, 
+      param_title, param_type, param_value, 
+      param_format, required, created_time, 
+      created_user_id, created_user_name, created_user_phone, 
+      updated_time, updated_user_id, updated_user_name, 
+      updated_user_phone, status, deleted
+      )
+    values (#{objId,jdbcType=VARCHAR}, #{objType,jdbcType=INTEGER}, #{paramName,jdbcType=VARCHAR}, 
+      #{paramTitle,jdbcType=VARCHAR}, #{paramType,jdbcType=VARCHAR}, #{paramValue,jdbcType=VARCHAR}, 
+      #{paramFormat,jdbcType=VARCHAR}, #{required,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{createdUserId,jdbcType=VARCHAR}, #{createdUserName,jdbcType=VARCHAR}, #{createdUserPhone,jdbcType=VARCHAR}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{updatedUserId,jdbcType=VARCHAR}, #{updatedUserName,jdbcType=VARCHAR}, 
+      #{updatedUserPhone,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{deleted,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lifengdi.job.entity.RequestParam">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_request_param
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="objId != null">
+        obj_id,
+      </if>
+      <if test="objType != null">
+        obj_type,
+      </if>
+      <if test="paramName != null">
+        param_name,
+      </if>
+      <if test="paramTitle != null">
+        param_title,
+      </if>
+      <if test="paramType != null">
+        param_type,
+      </if>
+      <if test="paramValue != null">
+        param_value,
+      </if>
+      <if test="paramFormat != null">
+        param_format,
+      </if>
+      <if test="required != null">
+        required,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="createdUserId != null">
+        created_user_id,
+      </if>
+      <if test="createdUserName != null">
+        created_user_name,
+      </if>
+      <if test="createdUserPhone != null">
+        created_user_phone,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="updatedUserId != null">
+        updated_user_id,
+      </if>
+      <if test="updatedUserName != null">
+        updated_user_name,
+      </if>
+      <if test="updatedUserPhone != null">
+        updated_user_phone,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="objId != null">
+        #{objId,jdbcType=VARCHAR},
+      </if>
+      <if test="objType != null">
+        #{objType,jdbcType=INTEGER},
+      </if>
+      <if test="paramName != null">
+        #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramTitle != null">
+        #{paramTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="paramType != null">
+        #{paramType,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null">
+        #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="paramFormat != null">
+        #{paramFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="required != null">
+        #{required,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createdUserPhone != null">
+        #{createdUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUserId != null">
+        #{updatedUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedUserName != null">
+        #{updatedUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedUserPhone != null">
+        #{updatedUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lifengdi.job.example.RequestParamCondition" resultType="java.lang.Long">
+    select count(*) from t_request_param
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_request_param
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.objId != null">
+        obj_id = #{record.objId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objType != null">
+        obj_type = #{record.objType,jdbcType=INTEGER},
+      </if>
+      <if test="record.paramName != null">
+        param_name = #{record.paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramTitle != null">
+        param_title = #{record.paramTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramType != null">
+        param_type = #{record.paramType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramValue != null">
+        param_value = #{record.paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramFormat != null">
+        param_format = #{record.paramFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.required != null">
+        required = #{record.required,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdTime != null">
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdUserId != null">
+        created_user_id = #{record.createdUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdUserName != null">
+        created_user_name = #{record.createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdUserPhone != null">
+        created_user_phone = #{record.createdUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedTime != null">
+        updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedUserId != null">
+        updated_user_id = #{record.updatedUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedUserName != null">
+        updated_user_name = #{record.updatedUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedUserPhone != null">
+        updated_user_phone = #{record.updatedUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_request_param
+    set id = #{record.id,jdbcType=BIGINT},
+      obj_id = #{record.objId,jdbcType=VARCHAR},
+      obj_type = #{record.objType,jdbcType=INTEGER},
+      param_name = #{record.paramName,jdbcType=VARCHAR},
+      param_title = #{record.paramTitle,jdbcType=VARCHAR},
+      param_type = #{record.paramType,jdbcType=VARCHAR},
+      param_value = #{record.paramValue,jdbcType=VARCHAR},
+      param_format = #{record.paramFormat,jdbcType=VARCHAR},
+      required = #{record.required,jdbcType=INTEGER},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      created_user_id = #{record.createdUserId,jdbcType=VARCHAR},
+      created_user_name = #{record.createdUserName,jdbcType=VARCHAR},
+      created_user_phone = #{record.createdUserPhone,jdbcType=VARCHAR},
+      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      updated_user_id = #{record.updatedUserId,jdbcType=VARCHAR},
+      updated_user_name = #{record.updatedUserName,jdbcType=VARCHAR},
+      updated_user_phone = #{record.updatedUserPhone,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      deleted = #{record.deleted,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lifengdi.job.entity.RequestParam">
+    update t_request_param
+    <set>
+      <if test="objId != null">
+        obj_id = #{objId,jdbcType=VARCHAR},
+      </if>
+      <if test="objType != null">
+        obj_type = #{objType,jdbcType=INTEGER},
+      </if>
+      <if test="paramName != null">
+        param_name = #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramTitle != null">
+        param_title = #{paramTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="paramType != null">
+        param_type = #{paramType,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null">
+        param_value = #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="paramFormat != null">
+        param_format = #{paramFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="required != null">
+        required = #{required,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        created_user_id = #{createdUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdUserName != null">
+        created_user_name = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createdUserPhone != null">
+        created_user_phone = #{createdUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUserId != null">
+        updated_user_id = #{updatedUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedUserName != null">
+        updated_user_name = #{updatedUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedUserPhone != null">
+        updated_user_phone = #{updatedUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lifengdi.job.entity.RequestParam">
+    update t_request_param
+    set obj_id = #{objId,jdbcType=VARCHAR},
+      obj_type = #{objType,jdbcType=INTEGER},
+      param_name = #{paramName,jdbcType=VARCHAR},
+      param_title = #{paramTitle,jdbcType=VARCHAR},
+      param_type = #{paramType,jdbcType=VARCHAR},
+      param_value = #{paramValue,jdbcType=VARCHAR},
+      param_format = #{paramFormat,jdbcType=VARCHAR},
+      required = #{required,jdbcType=INTEGER},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      created_user_id = #{createdUserId,jdbcType=VARCHAR},
+      created_user_name = #{createdUserName,jdbcType=VARCHAR},
+      created_user_phone = #{createdUserPhone,jdbcType=VARCHAR},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      updated_user_id = #{updatedUserId,jdbcType=VARCHAR},
+      updated_user_name = #{updatedUserName,jdbcType=VARCHAR},
+      updated_user_phone = #{updatedUserPhone,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

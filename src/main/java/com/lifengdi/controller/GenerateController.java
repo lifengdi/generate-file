@@ -1,10 +1,10 @@
-package com.lifengdi.generatefile.controller;
+package com.lifengdi.controller;
 
 import com.lifengdi.commons.utils.Either;
 import com.lifengdi.exception.ApiException;
 import com.lifengdi.file.builder.HtmlToPDFBuilder;
 import com.lifengdi.file.builder.InnerDownloadBuilder;
-import com.lifengdi.model.DownloadFileDTO;
+import com.lifengdi.model.dto.DownloadFileDTO;
 import com.lifengdi.model.PdfDTO;
 import com.lifengdi.response.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/generate")
 @Slf4j
-public class GenerateController {
+public class GenerateController extends BaseController {
 
     @Resource
     private HtmlToPDFBuilder htmlToPDFBuilder;

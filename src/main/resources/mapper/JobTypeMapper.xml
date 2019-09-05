@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lifengdi.job.mapper.JobTypeMapper">
+  <resultMap id="BaseResultMap" type="com.lifengdi.job.entity.JobType">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="job_type_id" jdbcType="VARCHAR" property="jobTypeId" />
+    <result column="job_type_desc" jdbcType="VARCHAR" property="jobTypeDesc" />
+    <result column="generate_file" jdbcType="INTEGER" property="generateFile" />
+    <result column="upload_file" jdbcType="INTEGER" property="uploadFile" />
+    <result column="send_notification" jdbcType="INTEGER" property="sendNotification" />
+    <result column="notification_type" jdbcType="BIGINT" property="notificationType" />
+    <result column="request_url" jdbcType="VARCHAR" property="requestUrl" />
+    <result column="request_method" jdbcType="VARCHAR" property="requestMethod" />
+    <result column="enable_access" jdbcType="INTEGER" property="enableAccess" />
+    <result column="response_data_entity" jdbcType="VARCHAR" property="responseDataEntity" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="created_user_id" jdbcType="VARCHAR" property="createdUserId" />
+    <result column="created_user_name" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="created_user_phone" jdbcType="VARCHAR" property="createdUserPhone" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="updated_user_id" jdbcType="VARCHAR" property="updatedUserId" />
+    <result column="updated_user_name" jdbcType="VARCHAR" property="updatedUserName" />
+    <result column="updated_user_phone" jdbcType="VARCHAR" property="updatedUserPhone" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, job_type_id, job_type_desc, generate_file, upload_file, send_notification, notification_type, 
+    request_url, request_method, enable_access, response_data_entity, created_time, created_user_id, 
+    created_user_name, created_user_phone, updated_time, updated_user_id, updated_user_name, 
+    updated_user_phone, status, deleted
+  </sql>
+  <select id="selectByExample" parameterType="com.lifengdi.job.example.JobTypeCondition" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_job_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_job_type
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_job_type
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lifengdi.job.entity.JobType">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_job_type (job_type_id, job_type_desc, generate_file, 
+      upload_file, send_notification, notification_type, 
+      request_url, request_method, enable_access, 
+      response_data_entity, created_time, created_user_id, 
+      created_user_name, created_user_phone, updated_time, 
+      updated_user_id, updated_user_name, updated_user_phone, 
+      status, deleted)
+    values (#{jobTypeId,jdbcType=VARCHAR}, #{jobTypeDesc,jdbcType=VARCHAR}, #{generateFile,jdbcType=INTEGER}, 
+      #{uploadFile,jdbcType=INTEGER}, #{sendNotification,jdbcType=INTEGER}, #{notificationType,jdbcType=BIGINT}, 
+      #{requestUrl,jdbcType=VARCHAR}, #{requestMethod,jdbcType=VARCHAR}, #{enableAccess,jdbcType=INTEGER}, 
+      #{responseDataEntity,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=VARCHAR}, 
+      #{createdUserName,jdbcType=VARCHAR}, #{createdUserPhone,jdbcType=VARCHAR}, #{updatedTime,jdbcType=TIMESTAMP}, 
+      #{updatedUserId,jdbcType=VARCHAR}, #{updatedUserName,jdbcType=VARCHAR}, #{updatedUserPhone,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{deleted,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lifengdi.job.entity.JobType">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_job_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jobTypeId != null">
+        job_type_id,
+      </if>
+      <if test="jobTypeDesc != null">
+        job_type_desc,
+      </if>
+      <if test="generateFile != null">
+        generate_file,
+      </if>
+      <if test="uploadFile != null">
+        upload_file,
+      </if>
+      <if test="sendNotification != null">
+        send_notification,
+      </if>
+      <if test="notificationType != null">
+        notification_type,
+      </if>
+      <if test="requestUrl != null">
+        request_url,
+      </if>
+      <if test="requestMethod != null">
+        request_method,
+      </if>
+      <if test="enableAccess != null">
+        enable_access,
+      </if>
+      <if test="responseDataEntity != null">
+        response_data_entity,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="createdUserId != null">
+        created_user_id,
+      </if>
+      <if test="createdUserName != null">
+        created_user_name,
+      </if>
+      <if test="createdUserPhone != null">
+        created_user_phone,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="updatedUserId != null">
+        updated_user_id,
+      </if>
+      <if test="updatedUserName != null">
+        updated_user_name,
+      </if>
+      <if test="updatedUserPhone != null">
+        updated_user_phone,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jobTypeId != null">
+        #{jobTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTypeDesc != null">
+        #{jobTypeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="generateFile != null">
+        #{generateFile,jdbcType=INTEGER},
+      </if>
+      <if test="uploadFile != null">
+        #{uploadFile,jdbcType=INTEGER},
+      </if>
+      <if test="sendNotification != null">
+        #{sendNotification,jdbcType=INTEGER},
+      </if>
+      <if test="notificationType != null">
+        #{notificationType,jdbcType=BIGINT},
+      </if>
+      <if test="requestUrl != null">
+        #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null">
+        #{requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="enableAccess != null">
+        #{enableAccess,jdbcType=INTEGER},
+      </if>
+      <if test="responseDataEntity != null">
+        #{responseDataEntity,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createdUserPhone != null">
+        #{createdUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUserId != null">
+        #{updatedUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedUserName != null">
+        #{updatedUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedUserPhone != null">
+        #{updatedUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lifengdi.job.example.JobTypeCondition" resultType="java.lang.Long">
+    select count(*) from t_job_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_job_type
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.jobTypeId != null">
+        job_type_id = #{record.jobTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobTypeDesc != null">
+        job_type_desc = #{record.jobTypeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.generateFile != null">
+        generate_file = #{record.generateFile,jdbcType=INTEGER},
+      </if>
+      <if test="record.uploadFile != null">
+        upload_file = #{record.uploadFile,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendNotification != null">
+        send_notification = #{record.sendNotification,jdbcType=INTEGER},
+      </if>
+      <if test="record.notificationType != null">
+        notification_type = #{record.notificationType,jdbcType=BIGINT},
+      </if>
+      <if test="record.requestUrl != null">
+        request_url = #{record.requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestMethod != null">
+        request_method = #{record.requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enableAccess != null">
+        enable_access = #{record.enableAccess,jdbcType=INTEGER},
+      </if>
+      <if test="record.responseDataEntity != null">
+        response_data_entity = #{record.responseDataEntity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTime != null">
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdUserId != null">
+        created_user_id = #{record.createdUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdUserName != null">
+        created_user_name = #{record.createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdUserPhone != null">
+        created_user_phone = #{record.createdUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedTime != null">
+        updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedUserId != null">
+        updated_user_id = #{record.updatedUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedUserName != null">
+        updated_user_name = #{record.updatedUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedUserPhone != null">
+        updated_user_phone = #{record.updatedUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_job_type
+    set id = #{record.id,jdbcType=BIGINT},
+      job_type_id = #{record.jobTypeId,jdbcType=VARCHAR},
+      job_type_desc = #{record.jobTypeDesc,jdbcType=VARCHAR},
+      generate_file = #{record.generateFile,jdbcType=INTEGER},
+      upload_file = #{record.uploadFile,jdbcType=INTEGER},
+      send_notification = #{record.sendNotification,jdbcType=INTEGER},
+      notification_type = #{record.notificationType,jdbcType=BIGINT},
+      request_url = #{record.requestUrl,jdbcType=VARCHAR},
+      request_method = #{record.requestMethod,jdbcType=VARCHAR},
+      enable_access = #{record.enableAccess,jdbcType=INTEGER},
+      response_data_entity = #{record.responseDataEntity,jdbcType=VARCHAR},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      created_user_id = #{record.createdUserId,jdbcType=VARCHAR},
+      created_user_name = #{record.createdUserName,jdbcType=VARCHAR},
+      created_user_phone = #{record.createdUserPhone,jdbcType=VARCHAR},
+      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      updated_user_id = #{record.updatedUserId,jdbcType=VARCHAR},
+      updated_user_name = #{record.updatedUserName,jdbcType=VARCHAR},
+      updated_user_phone = #{record.updatedUserPhone,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      deleted = #{record.deleted,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lifengdi.job.entity.JobType">
+    update t_job_type
+    <set>
+      <if test="jobTypeId != null">
+        job_type_id = #{jobTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTypeDesc != null">
+        job_type_desc = #{jobTypeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="generateFile != null">
+        generate_file = #{generateFile,jdbcType=INTEGER},
+      </if>
+      <if test="uploadFile != null">
+        upload_file = #{uploadFile,jdbcType=INTEGER},
+      </if>
+      <if test="sendNotification != null">
+        send_notification = #{sendNotification,jdbcType=INTEGER},
+      </if>
+      <if test="notificationType != null">
+        notification_type = #{notificationType,jdbcType=BIGINT},
+      </if>
+      <if test="requestUrl != null">
+        request_url = #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null">
+        request_method = #{requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="enableAccess != null">
+        enable_access = #{enableAccess,jdbcType=INTEGER},
+      </if>
+      <if test="responseDataEntity != null">
+        response_data_entity = #{responseDataEntity,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        created_user_id = #{createdUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdUserName != null">
+        created_user_name = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createdUserPhone != null">
+        created_user_phone = #{createdUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUserId != null">
+        updated_user_id = #{updatedUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedUserName != null">
+        updated_user_name = #{updatedUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedUserPhone != null">
+        updated_user_phone = #{updatedUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lifengdi.job.entity.JobType">
+    update t_job_type
+    set job_type_id = #{jobTypeId,jdbcType=VARCHAR},
+      job_type_desc = #{jobTypeDesc,jdbcType=VARCHAR},
+      generate_file = #{generateFile,jdbcType=INTEGER},
+      upload_file = #{uploadFile,jdbcType=INTEGER},
+      send_notification = #{sendNotification,jdbcType=INTEGER},
+      notification_type = #{notificationType,jdbcType=BIGINT},
+      request_url = #{requestUrl,jdbcType=VARCHAR},
+      request_method = #{requestMethod,jdbcType=VARCHAR},
+      enable_access = #{enableAccess,jdbcType=INTEGER},
+      response_data_entity = #{responseDataEntity,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      created_user_id = #{createdUserId,jdbcType=VARCHAR},
+      created_user_name = #{createdUserName,jdbcType=VARCHAR},
+      created_user_phone = #{createdUserPhone,jdbcType=VARCHAR},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      updated_user_id = #{updatedUserId,jdbcType=VARCHAR},
+      updated_user_name = #{updatedUserName,jdbcType=VARCHAR},
+      updated_user_phone = #{updatedUserPhone,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

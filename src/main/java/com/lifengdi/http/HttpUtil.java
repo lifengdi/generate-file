@@ -1,12 +1,25 @@
 package com.lifengdi.http;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.lifengdi.commons.utils.Either;
+import com.lifengdi.exception.ApiException;
+import com.lifengdi.exception.BaseException;
+import com.lifengdi.response.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 /**
  * http工具类
@@ -17,6 +30,93 @@ import java.net.URL;
 @Component
 @Slf4j
 public class HttpUtil {
+
+    @Resource
+    private RestTemplate restTemplate;
+
+    /**
+     * GET 请求
+     * @param url 请求地址
+     * @param params 请求参数
+     * @return Either
+     */
+    public  Either<ApiException, ResponseResult> get(String url, Map<String, Object> params) {
+        if (!url.startsWith("http")) {
+            return Either.left(BaseException.URL_FORMAT_ERROR.build());
+        }
+        if (!CollectionUtils.isEmpty(params)) {
+            StringJoiner stringJoiner = new StringJoiner("&");
+            for (Map.Entry entry : params.entrySet()) {
+                stringJoiner.add(entry.getKey() + "=" + entry.getValue());
+            }
+            if (url.endsWith("?")) {
+                // eg.: http://www.example.com/api?
+                url = url + stringJoiner.toString();
+            } else if (url.indexOf("?") > 0 && !url.endsWith("?")) {
+                if (url.endsWith("&")) {
+                    // eg.: http://www.example.com/api?key=value&
+                    url = url + stringJoiner.toString();
+                } else {
+                    // eg.: http://www.example.com/api?key=value
+                    url = url + "&" + stringJoiner.toString();
+                }
+            } else {
+                // eg.: http://www.example.com/api
+                url = url + "?" + stringJoiner.toString();
+            }
+        }
+        HttpHeaders requestHeaders = new HttpHeaders();
+        HttpEntity requestEntity = new HttpEntity(requestHeaders);
+        ParameterizedTypeReference typeRef = new ParameterizedTypeReference<ResponseResult<Object>>(){};
+
+        log.info("发送GET请求，URL：{}，参数：{}", url, params);
+        final ResponseEntity<ResponseResult> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, typeRef);
+        log.info("发送GET请求，URL:{}，参数:{}，接口响应内容:{}", url, params, response.getBody());
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return Either.right(response.getBody());
+        }
+
+        return Either.left(BaseException.GET_REQUEST_EXCEPTION.build());
+    }
+
+    /**
+     * POST 请求
+     * @param url URL
+     * @param params 请求参数
+     * @return Either
+     */
+    public Either<ApiException, ResponseResult> post(String url, JSONObject params) {
+        if (!url.startsWith("http")) {
+            return Either.left(BaseException.URL_FORMAT_ERROR.build());
+        }
+        ParameterizedTypeReference typeReference = new ParameterizedTypeReference<ResponseResult<Object>>(){};
+        HttpHeaders requestHeaders = new HttpHeaders();
+        if (Objects.isNull(params)) {
+            params = new JSONObject();
+        }
+        HttpEntity<JSONObject> requestEntity = new HttpEntity<>(params, requestHeaders);
+        log.info("发送POST请求，URL：{}，参数：{}", url, params);
+        final ResponseEntity<ResponseResult> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, typeReference);
+        log.info("发送POST请求，URL:{}，参数:{}，接口响应内容:{}", url, params, response.getBody());
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return Either.right(response.getBody());
+        }
+
+        return Either.left(BaseException.POST_REQUEST_EXCEPTION.build());
+    }
+
+    /**
+     * POST 请求
+     * @param url URL
+     * @param params 请求参数
+     * @return Either
+     */
+    public Either<ApiException, ResponseResult> post(String url, Map<String, Object> params) {
+        if (CollectionUtils.isEmpty(params)) {
+            return post(url, null);
+        }
+        return post(url, JSON.parseObject(JSON.toJSONString(params)));
+    }
 
     /**
      * 下载文件

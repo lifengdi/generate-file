@@ -14,6 +14,7 @@ import lombok.Getter;
 public enum BaseException implements ApiExceptionFactory {
 
     OPERATE_ERROR("1000", "操作失败")
+    ,NULL_USER_EXCEPTION("1001", "用户数据为空")
 
     , NULL_DATA_EXCEPTION("1010", "数据为空")
     , GET_ENTITY_ERROR("1011", "数据不存在")

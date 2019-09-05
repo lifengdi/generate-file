@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lifengdi.job.mapper.JobTypeLogMapper">
+  <resultMap id="BaseResultMap" type="com.lifengdi.job.entity.JobTypeLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="job_type_id" jdbcType="VARCHAR" property="jobTypeId" />
+    <result column="operate_type" jdbcType="VARCHAR" property="operateType" />
+    <result column="old_content" jdbcType="VARCHAR" property="oldContent" />
+    <result column="new_content" jdbcType="VARCHAR" property="newContent" />
+    <result column="operate_desc" jdbcType="VARCHAR" property="operateDesc" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="operator_id" jdbcType="VARCHAR" property="operatorId" />
+    <result column="operator_name" jdbcType="VARCHAR" property="operatorName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, job_type_id, operate_type, old_content, new_content, operate_desc, created_time, 
+    operator_id, operator_name
+  </sql>
+  <select id="selectByExample" parameterType="com.lifengdi.job.example.JobTypeLogCondition" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_job_type_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_job_type_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_job_type_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lifengdi.job.entity.JobTypeLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_job_type_log (job_type_id, operate_type, old_content, 
+      new_content, operate_desc, created_time, 
+      operator_id, operator_name)
+    values (#{jobTypeId,jdbcType=VARCHAR}, #{operateType,jdbcType=VARCHAR}, #{oldContent,jdbcType=VARCHAR}, 
+      #{newContent,jdbcType=VARCHAR}, #{operateDesc,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{operatorId,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lifengdi.job.entity.JobTypeLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_job_type_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jobTypeId != null">
+        job_type_id,
+      </if>
+      <if test="operateType != null">
+        operate_type,
+      </if>
+      <if test="oldContent != null">
+        old_content,
+      </if>
+      <if test="newContent != null">
+        new_content,
+      </if>
+      <if test="operateDesc != null">
+        operate_desc,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="operatorId != null">
+        operator_id,
+      </if>
+      <if test="operatorName != null">
+        operator_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jobTypeId != null">
+        #{jobTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null">
+        #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="oldContent != null">
+        #{oldContent,jdbcType=VARCHAR},
+      </if>
+      <if test="newContent != null">
+        #{newContent,jdbcType=VARCHAR},
+      </if>
+      <if test="operateDesc != null">
+        #{operateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null">
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lifengdi.job.example.JobTypeLogCondition" resultType="java.lang.Long">
+    select count(*) from t_job_type_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_job_type_log
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.jobTypeId != null">
+        job_type_id = #{record.jobTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operateType != null">
+        operate_type = #{record.operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldContent != null">
+        old_content = #{record.oldContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newContent != null">
+        new_content = #{record.newContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operateDesc != null">
+        operate_desc = #{record.operateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTime != null">
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatorId != null">
+        operator_id = #{record.operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorName != null">
+        operator_name = #{record.operatorName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_job_type_log
+    set id = #{record.id,jdbcType=BIGINT},
+      job_type_id = #{record.jobTypeId,jdbcType=VARCHAR},
+      operate_type = #{record.operateType,jdbcType=VARCHAR},
+      old_content = #{record.oldContent,jdbcType=VARCHAR},
+      new_content = #{record.newContent,jdbcType=VARCHAR},
+      operate_desc = #{record.operateDesc,jdbcType=VARCHAR},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      operator_id = #{record.operatorId,jdbcType=VARCHAR},
+      operator_name = #{record.operatorName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lifengdi.job.entity.JobTypeLog">
+    update t_job_type_log
+    <set>
+      <if test="jobTypeId != null">
+        job_type_id = #{jobTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null">
+        operate_type = #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="oldContent != null">
+        old_content = #{oldContent,jdbcType=VARCHAR},
+      </if>
+      <if test="newContent != null">
+        new_content = #{newContent,jdbcType=VARCHAR},
+      </if>
+      <if test="operateDesc != null">
+        operate_desc = #{operateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null">
+        operator_id = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null">
+        operator_name = #{operatorName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lifengdi.job.entity.JobTypeLog">
+    update t_job_type_log
+    set job_type_id = #{jobTypeId,jdbcType=VARCHAR},
+      operate_type = #{operateType,jdbcType=VARCHAR},
+      old_content = #{oldContent,jdbcType=VARCHAR},
+      new_content = #{newContent,jdbcType=VARCHAR},
+      operate_desc = #{operateDesc,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      operator_id = #{operatorId,jdbcType=VARCHAR},
+      operator_name = #{operatorName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

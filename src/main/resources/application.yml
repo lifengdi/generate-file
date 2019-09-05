@@ -1,0 +1,66 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /generate-file
+spring:
+  application:
+    name: generate-file
+  jackson:
+      date-format: yyyy-MM-dd HH:mm:ss
+      time-zone: GMT+8
+      joda-date-time-format: yyyy-MM-dd HH:mm:ss
+      default-property-inclusion: non_null
+
+logging:
+  file: application.log
+  path: .
+  level:
+    root: info
+    com.lifengdi.store.client: DEBUG
+
+file:
+  localTempPath: /Users/goddess/
+  appTempFolder: file/
+
+# 腾讯云配置文件
+cloud:
+  secret.id: secret.id
+  secret.key: secret.key
+  app.id: 123456789
+  bucket.name: bucket.name
+  region: region
+  cdn.dir.path: file_sys/yyyy/MM/
+  cdn.url: cdn.url
+
+# 生成PDF文件配置
+pdf:
+  pdfType:
+    test:
+      pdfTempFile:
+        pdfType: test
+        templateFileName: test.ftl
+        templateFileParentPath: file/
+      pdfStamperConfig:
+        generate: true
+        stamperUrl: image/666.png
+        xOffset: 0
+        yOffset: 45
+        fitWidth: 120
+        fitHeight: 120
+        location:
+          x: -1
+          y: -1
+          page: 1
+          word: 检测日期
+      pdfWatermarkConfig:
+        generate: true
+        watermarkWord: 水印
+        watermarkColor:
+        fillOpacity:
+        fontSize:
+        fontFamily: SourceHanSansCN
+        location:
+          xInterval: 100
+          yInterval: 120
+          page:
+          overContent: true

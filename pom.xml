@@ -18,7 +18,7 @@
         <java.version>1.8</java.version>
         <testng.version>6.14.2</testng.version>
         <spring-cloud-dependencies.version>Greenwich.SR2</spring-cloud-dependencies.version>
-        <fastjson.version>1.2.47</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <flying-saucer-pdf-itext5.version>9.1.18</flying-saucer-pdf-itext5.version>
         <freemarker.version>2.3.27-incubating</freemarker.version>
         <commons-io.version>2.4</commons-io.version>
